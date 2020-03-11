@@ -12,13 +12,11 @@ public class Map {
     		connections = new ArrayList<>();
     		caverns = new ArrayList<>();
     }
-    
-    
 
 
     public int getDestination(int from, String direction) {
         for(Connection c : connections){
-            if (c.getFrom() == from && direction == c.getDirection()) {
+            if (c.getFrom() == from && direction.equals(c.getDirection())) {
                 return c.getTo();
             }
         }

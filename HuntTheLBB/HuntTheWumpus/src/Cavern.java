@@ -2,6 +2,7 @@ public class Cavern {
 	private int id = -1;
 	private boolean hasPits;
 	private boolean hasBats;
+	private int arrows;
 	
 	public Cavern(int id) {
 		this.id = id;
@@ -26,6 +27,14 @@ public class Cavern {
 	
 	public void setHasBats(boolean hasBats) {
 		this.hasBats = hasBats;
+	}
+
+	public int getArrows() {
+		return arrows;
+	}
+
+	public void setArrows(int arrows) {
+		this.arrows = arrows;
 	}
 	
 	
