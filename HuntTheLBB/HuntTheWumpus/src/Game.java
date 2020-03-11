@@ -33,6 +33,25 @@ public class Game {
     		messages.add("You got yeeted into a pit /ln");
     	}
     }
+    
+    public void shootArrow(String direction) {
+        playerArrows -= 1;
+        int arrowLocation = playerLocation;
+        int nextArrowLocation = map.getDestination(arrowLocation, direction);
+        if (nextArrowLocation == -1) {
+            isGameOn = false;
+            messages.add("Your arrow bounced off a wall and killed you");
+        }
+        while (nextArrowLocation == -1) {
+            arrowLocation = nextArrowLocation;
+            if (arrowLocation == wumpusLocation) {
+                isGameOn = false;
+                messages.add("You shoot the wumpus !!!");
+                break;
+            }
+            nextArrowLocation = map.getDestination(arrowLocation, direction);
+        }
+    }
 
     public int getPlayerLocation() {
         return playerLocation;
