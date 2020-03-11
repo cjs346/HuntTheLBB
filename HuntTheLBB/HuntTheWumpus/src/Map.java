@@ -2,31 +2,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Map {
-    private List<Connection> connections = new ArrayList<>();
-    public void connect(int first, int second, String direction){
-        connections.add(new Connection(first, second, direction));
+    private List<Connection> connections;
+    private List<Cavern> caverns;
+    private int totalCaverns;
+
+    
+    public Map(int totalCaverns) {
+    		this.totalCaverns = totalCaverns;
+    		connections = new ArrayList<>();
+    		caverns = new ArrayList<>();
     }
+    
+    
 
 
-    public int getDestination(int cavern, String direction) {
+    public int getDestination(int from, String direction) {
         for(Connection c : connections){
-            if (c.from == cavern && direction == c.direction) {
-                return c.to;
+            if (c.getFrom() == from && direction == c.getDirection()) {
+                return c.getTo();
             }
         }
         return -1;
     }
-
-    private class Connection{
-        private final int from;
-        private final int to;
-        private final String direction;
-
-        public Connection(int from, int to, String Direction){
-
-            this.from = from;
-            this.to = to;
-            direction = Direction;
-        }
+    
+    
+    public List<Connection> getConnections() {
+		return connections;
     }
+
+
+	public void setConnections(List<Connection> connections) {
+		this.connections = connections;
+	}
+    
+
+	public List<Cavern> getCaverns() {
+		return caverns;
+	}
+
+
+	public void setCaverns(List<Cavern> caverns) {
+		this.caverns = caverns;
+	}
+
+
+
+	
 }
