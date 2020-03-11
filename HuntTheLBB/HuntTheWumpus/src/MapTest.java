@@ -23,7 +23,7 @@ public class MapTest {
         game.readInputAndExecute(Direction.EAST.getDirection());
 
         assertEquals(3, game.getPlayerLocation());
-        assertEquals("You have 5 arrows left. /ln" ,game.getMessages().get(0));
+        assertEquals("You have 5 arrows left." ,game.getMessages().get(0));
         assertTrue(game.isGameOn);	
     }
     

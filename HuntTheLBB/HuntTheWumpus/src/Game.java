@@ -18,7 +18,7 @@ public class Game {
         this.map = map;
         this.messenger = messenger;
         this.isGameOn = true;
-    
+        
     }
 
     public void insertPlayer(int i) {
@@ -40,7 +40,7 @@ public class Game {
     				EndTurn();
     			}
     			else {
-    				shootArrow(input);
+    				shootArrow(input.substring(1));
     				EndTurn();
     				return;
     			}
@@ -57,11 +57,11 @@ public class Game {
         }
         else if(didWumpusMurderYou()){
     		this.isGameOn = false;
-    		messages.add("wumpus murdered you /ln");
+    		messages.add("wumpus murdered you.");
     	}
     	else if(didYouFall()){	
     		this.isGameOn = false;
-    		messages.add("You got yeeted into a pit /ln");
+    		messages.add("You got yeeted into a pit");
     	}
     }
     
@@ -72,8 +72,9 @@ public class Game {
         if (nextArrowLocation == -1) {
             isGameOn = false;
             messages.add("Your arrow bounced off a wall and killed you :(");
+            return;
         }
-        while (nextArrowLocation == -1) {
+        while (nextArrowLocation != -1) {
             arrowLocation = nextArrowLocation;
             if (arrowLocation == wumpusLocation) {
                 isGameOn = false;
@@ -83,6 +84,7 @@ public class Game {
             nextArrowLocation = map.getDestination(arrowLocation, direction);
         }
         messages.add("Your arrow missed :(");
+        map.getCaverns().get(arrowLocation).setArrows(map.getCaverns().get(arrowLocation).getArrows() + 1);
     }
 
     public int getPlayerLocation() {
@@ -94,9 +96,14 @@ public class Game {
     		int arrows = map.getCaverns().get(playerLocation).getArrows();
         	if (arrows > 0) {
         		this.playerArrows += arrows;
-        		messages.add("You picked up " + arrows + " arrows. /ln");
+        		messages.add("You picked up " + arrows + " arrows.");
         	}
-        	messages.add("You have " + playerArrows + " arrows left. /ln");   
+        	messages.add("You have " + playerArrows + " arrows left."); 
+        	for (Connection c: map.getConnections()) {
+        		if (c.getFrom() == this.playerLocation) {
+        			messages.add("You can move " + c.getDirection());
+        		}
+        	}
     	}
     }
    
