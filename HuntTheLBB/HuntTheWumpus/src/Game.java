@@ -23,8 +23,13 @@ public class Game {
     }
 
     public void move(String direction) {
+        int originalPlayerLocation = playerLocation;
         playerLocation = map.getDestination(playerLocation, direction);
-    	if(didWumpusMurderYou()){
+        if (didYouMakeAnInvalidMove()) {
+            playerLocation = originalPlayerLocation;
+            messages.add("You cannot move in that direction, try moving again");
+        }
+        else if(didWumpusMurderYou()){
     		this.isGameOn = false;
     		messages.add("wumpus murdered you /ln");
     	}
@@ -40,17 +45,18 @@ public class Game {
         int nextArrowLocation = map.getDestination(arrowLocation, direction);
         if (nextArrowLocation == -1) {
             isGameOn = false;
-            messages.add("Your arrow bounced off a wall and killed you");
+            messages.add("Your arrow bounced off a wall and killed you :(");
         }
         while (nextArrowLocation == -1) {
             arrowLocation = nextArrowLocation;
             if (arrowLocation == wumpusLocation) {
                 isGameOn = false;
                 messages.add("You shoot the wumpus !!!");
-                break;
+                return;
             }
             nextArrowLocation = map.getDestination(arrowLocation, direction);
         }
+        messages.add("Your arrow missed :(");
     }
 
     public int getPlayerLocation() {
@@ -65,6 +71,10 @@ public class Game {
         	messages.add("You have " + playerArrows + " arrows left. /ln");    	
     	}
     	return messages.toString();
+    }
+    
+    private boolean didYouMakeAnInvalidMove() {
+        return playerLocation == -1;
     }
     
     private boolean didWumpusMurderYou() {
