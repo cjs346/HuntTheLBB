@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 
 public class HuntTheWumpus {
@@ -21,5 +22,13 @@ public class HuntTheWumpus {
         assertEquals(3, game.getPlayerLocation());
     }
 
+    @Test
+    public void testPlayerDeath() {
+        Map map = new Map();
+        Game game = new Game(map, new MessengerSpy());
 
+        assertEquals("wumpus murdered you" ,game.EndTurn());
+        assertFalse(game.isGameOn);
+        
+    }
 }
